@@ -12,3 +12,6 @@ It then returns a promise that resolves to a string containing clydes exact resp
 
 Current issues:
 Cant have two messages at once in the same channel, this can be solved by creating many channels and rotating between them however this is obviously not ideal
+
+To install:
+npm i @thecrazyinsanity2/clydeapi
