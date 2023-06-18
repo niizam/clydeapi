@@ -1,0 +1,22 @@
+{
+  "name": "@thecrazyinsanity2/clydeapi",
+  "version": "1.0.0",
+  "description": "A basic unofficial api to interact with discords AI, clyde.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thecrazyinsanity/clydeapi.git"
+  },
+  "author": "thecrazyinsanity",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/thecrazyinsanity/clydeapi/issues"
+  },
+  "homepage": "https://github.com/thecrazyinsanity/clydeapi#readme",
+  "dependencies": {
+    "axios": "^1.4.0"
+  }
+}
