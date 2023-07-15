@@ -28,9 +28,9 @@ const {
     delay
   } = require('./path/to/js/file');
   
-  const token = 'your discord token';
-  const guildId = 'your server id';
-  const parentId = null;
+  const token = 'Your Discord Token Authorization';
+  const guildId = 'Your Discord server ID';
+  const parentId = 'Your Text Channel ID';
   const channelName = 'testing';
   
   async function processChannels() {
