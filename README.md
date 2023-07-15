@@ -37,13 +37,17 @@ const {
     try {
       const channels = await listChannels(guildId, parentId, token);
       const matchingChannels = channels.filter(channel => channel.name === channelName);
-  
+      let deleteChannelsCalled = false; // make sure to run it only once
+
       if (matchingChannels.length > 0) {
         const channelIds = matchingChannels.map(channel => channel.id);
         
         const response = await askClyde('@Clyde Im fine thank you', token, channelIds);
         console.log(response);
-        await deleteChannelsWithDelay(10000, channelIds, token);
+        if (!deleteChannelsCalled) {
+            await deleteChannelsWithDelay(10000, channelIds, token); // delete channel in 10 seconds
+            deleteChannelsCalled = true;
+        }
       } else {
         const channelId = await createChannel(guildId, parentId, channelName, token);
         console.log('New channel created with ID:', channelId);
