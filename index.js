@@ -209,8 +209,6 @@ function askClyde(prompt, token, channelid){
     return promise //🤓
 }
 
-const axios = require('axios');
-
 function editPersonality(prompt, guildId, token) {
   if (prompt.length > 500) {
     throw new Error('Prompt must be <=500 characters');
