@@ -209,11 +209,40 @@ function askClyde(prompt, token, channelid){
     return promise //🤓
 }
 
+const axios = require('axios');
+
+function editPersonality(prompt, guildId, token) {
+  if (prompt.length > 500) {
+    throw new Error('Prompt must be <=500 characters');
+  }
+
+  let data = JSON.stringify({
+    "personality": prompt
+  });
+
+  let config = {
+    method: 'patch',
+    url: `https://discord.com/api/v9/guilds/${guildId}/clyde-settings`,
+    headers: { 
+      'accept': '*/*',
+      'accept-language': 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7,zh-CN;q=0.6,zh;q=0.5',
+      'authorization': token,
+      'content-type': 'application/json',
+      'x-discord-locale': 'en-US',
+      'x-discord-timezone': 'Asia/Barnaul',
+    },
+    data: data
+  };
+
+  return axios(config);
+}
+
 module.exports = {
   askClyde,
   createChannel,
-  listChannels,
+  editPersonality,
   deleteChannel,
   deleteChannelsWithDelay,
-  delay
+  delay,
+  listChannels
 };
