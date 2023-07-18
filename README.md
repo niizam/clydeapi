@@ -25,12 +25,13 @@ const {
     deleteChannel,
     listChannels,
     deleteChannelsWithDelay,
-    delay
+    editPersonality
   } = require('./path/to/js/file');
   
   const token = 'Your Discord Token Authorization';
   const guildId = 'Your Discord server ID';
-  const parentId = 'Your Text Channel ID';
+  const parentId = null; // Your 'Text Channel' Channel ID (Optional)
+  const personality = 'Clyde is an helpful assistant';
   const channelName = 'testing';
   
   async function processChannels() {
@@ -58,6 +59,14 @@ const {
       console.error('Error:', error);
     }
   }
-  
-  processChannels();
+
+editPersonality(personality, guildId, token)
+  .then(response => {
+    console.log(response.data);
+  })
+  .catch(error => {
+    console.error("Error:", error.message);
+  });
+
+processChannels();
 ```
