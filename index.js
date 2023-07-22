@@ -209,6 +209,58 @@ function askClyde(prompt, token, channelid){
     return promise //🤓
 }
 
+// Initialize an object to store the conversation history per channel
+let conversationHistory = {};
+
+function askClydeWithMemory(prompt, token, channelid){
+    let promise = new Promise(function(resolve, reject) {
+        // Initialize the conversation history for this channel if it doesn't exist yet
+        if (!conversationHistory[channelid]) {
+            conversationHistory[channelid] = [];
+        }
+
+        // Form the conversation history as a string
+        let history = conversationHistory[channelid].map((message) => `${message.author}: ${message.message}`).join('\n');
+        // Append the new prompt to the history
+        let fullPrompt = history + '\nHuman: ' + prompt;
+
+        // Add the human's message to the conversation history for this channel
+        conversationHistory[channelid].push({author: 'Human', message: prompt});
+
+        // Limit the history to the last 2 messages per channel for human's message
+        if(conversationHistory[channelid].length > 2) {
+            conversationHistory[channelid].shift();
+        }
+
+        sendMessage(fullPrompt, token, channelid).then((response) =>{
+            console.log("sent message");
+
+            function dotheshit(){
+                getLastMessage(token, channelid).then((response) => {
+                    // Add Clyde's response to the conversation history for this channel
+                    conversationHistory[channelid].push({author: 'Clyde', message: response});
+
+                    // Limit the history to the last 2 messages per channel for Clyde's response
+                    if(conversationHistory[channelid].length > 2) {
+                        conversationHistory[channelid].shift();
+                    }
+
+                    resolve(response);
+                }).catch((error) => {
+                    if(error == "not clyde"){
+                        console.log("idk what to log here");
+                        setTimeout(dotheshit, 2000);
+                    }
+                })
+            }
+
+            setTimeout(dotheshit, 2000);
+        })
+    })
+
+    return promise; //🤓
+}
+
 function editPersonality(prompt, guildId, token) {
   if (prompt.length > 500) {
     throw new Error('Prompt must be <=500 characters');
@@ -237,6 +289,7 @@ function editPersonality(prompt, guildId, token) {
 
 module.exports = {
   askClyde,
+  askClydeWithMemory,
   createChannel,
   editPersonality,
   deleteChannel,
